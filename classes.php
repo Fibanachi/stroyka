@@ -1,57 +1,123 @@
 <?php
 
-class User {
+abstract class User {
 
-    public $fullname, $acceccRights;
+    public $fullname;
 
-	abstract public function getFullname();
-	
-	abstract public function getAccessRights();
+    public $accessRights;
 
+    abstract public function getFullname();
+
+    abstract public function getAccessRights();
 
 }
-class Supplier extends User{
+class TeamLead extends  User {
+    public $accessRights;
+    public  $name;
+    public  $surname;
+    public function __construct($name,$surname,$accessRights){
+       $this ->name=$name;
+       $this->surame=$surname;
+       $this->accessRights=$accessRights;
+    }
+    }
 
     function getFullname(){
-        return $this->fullname."\n";
+        return  $this->name.''.$this->surname;
     }
-    protected function getAccess()
+    function getAccessRights(){
+        return  $this->accessRights;
+    }
+    function make_order(){
+        return $this->orderBlank;
+    }
+    function workPlan(){
+         return this->
+//	Stockman
+interface FullName
+{
+    public function getFullName();
+}
+
+interface FullNameAccess extends FullName
+{
+    public function getAccessRights();
+}
+
+
+abstract class User
+{
+    public $fullName, $accessRights;
+}
+
+class Supplier extends User implements FullNameAccess
+{
+    protected $order;
+
+    public function getFullName()
+    {
+        return $this->fullName . "\n";
+    }
+
+    public function getAccessRights()
     {
         $access = ["director" => "all", "supplier" => "only orders", "worker" => "without access"];
         foreach ($access as $key => $value) {
-            echo $access["supplier"];
+            echo $access[ "supplier" ];
         }
     }
-    function do_order($order){
-        $this->order=$order;//with Vlasta?
 
+    function do_order($order)
+    {
+        $this->order = $order; //with Vlasta?
     }
 }
 
-Class Director extends User {
+Class Director extends User
+{
 
-    function __construct($name,$accessRights)
+    function __construct($name, array $accessRights)
     {
-        $this->fullname = $name;
+        $this->fullName     = $name;
         $this->accessRights = $accessRights;
     }
 
-    function getFullname(){
-        return $this->fullname;
+    public function getFullName()
+    {
+        return $this->fullName;
     }
 
-    function getAccessRights(){
+    public function getAccessRights()
+    {
         return $this->accessRights;
     }
 
-    function setFullname($name){
-        $this->fullname = $name;
+    public function setFullName($name)
+    {
+        if (gettype($name) === 'string') {
+            $this->fullName = $name;
+        }
     }
 
-    function setAccessRights(array $rights){
+    public function setAccessRights(array $rights)
+    {
         $this->accessRights = $rights;
     }
 }
+
+$director = new Director('Like A Boss', ['director']);
+$supplier = new Supplier();
+$supplier->fullName = 'Nikita';
+$supplier->accessRights = 'supplier';
+
+$persons[] = $director;
+$persons[] = $supplier;
+
+foreach ($persons as $person)
+{
+    echo $person->getFullName().PHP_EOL;
+}
+
 
 /*
 	Director Sergey
